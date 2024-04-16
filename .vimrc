@@ -4,8 +4,6 @@ Plugin 'VundleVim/Vundle.vim'
 Plugin 'tpope/vim-fugitive'
 Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
 Plugin 'scrooloose/nerdtree'
-"Plugin 'Valloric/YouCompleteMe'
-"Plugin 'autozimu/LanguageClient-neovim'
 call vundle#end()
 filetype plugin indent on
 
@@ -16,20 +14,6 @@ let NERDTreeWinPos = "left"
 let g:NERDTreeQuitOnOpen = 0
 autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
 
-" YouCompleteMe 설정
-"let g:ycm_global_ycm_extra_conf = '~/.vim/plugged/YouCompleteMe/third_party/ycmd/.ycm_extra_conf.py'
-"let g:ycm_semantic_triggers =  {
-"            \ 'c,cpp,python,java,go': ['re!\w{2}'],
-"            \ 'cs,lua,javascript': ['re!\w{2}'],
-"            \ }
-"let g:ycm_auto_trigger = 1
-"
-" Clangd 설정
-"let g:LanguageClient_serverCommands = {
-" \ 'c': ['clangd'],
-" \ 'cpp': ['clangd'],
-" \ }
-
 colorscheme desert
 syntax on
 set wildmenu
@@ -38,8 +22,11 @@ set hlsearch
 set incsearch
 set cindent
 set ts=4
+set sw=4
 set tags +=./tags,tags;
 set nocompatible
+set backspace=3
+set nu
 filetype plugin on
 "filetype plugin indent on
 
@@ -64,8 +51,11 @@ autocmd FileType c,cpp nmap <buffer> <silent> gp [{k<s-v>j%y<C-o><C-o>
 
 "apply templates for .cpp and .hpp files
 autocmd BufNewFile main.cpp silent 0r ~/templates/main.cpp | silent! $delete
+autocmd BufNewFile main.c silent 0r ~/templates/main.cpp | silent! $delete
 autocmd BufNewFile *.hpp silent 0r ~/templates/header.hpp | silent! $delete
 autocmd BufNewFile *.hpp call SubstituteHeader()
+autocmd BufNewFile *.h silent 0r ~/templates/header.hpp | silent! $delete
+autocmd BufNewFile *.h call SubstituteHeader()
 
 "A function that retrieves the filename and changes it to uppercase.
 function! SubstituteHeader()
